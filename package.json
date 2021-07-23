@@ -3,7 +3,8 @@
   "version": "1.0.0",
   "description": "Project for Storing Postman Tests",
   "scripts": {
-    "api-test-Trello": "newman run TRELLO.json --reporters cli,junit --reporter-junit-export newman.xml"
+    "api-test-Trello": "newman run TRELLO.json --reporters cli,junit --reporter-junit-export TrelloResults.xml",
+    "api-test-Petstore": "newman run PETSTORE.json --reporters cli,junit --reporter-junit-export PetStoreResults.xml"
   },
   "repository": {
     "type": "git",
