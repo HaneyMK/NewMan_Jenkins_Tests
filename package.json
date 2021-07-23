@@ -1,0 +1,21 @@
+{
+  "name": "newman_jenkins_tests",
+  "version": "1.0.0",
+  "description": "Project for Storing Postman Tests",
+  "scripts": {
+    "api-test-Trello": "newman run TRELLO.json",
+    "api-test-PETSTORE": "newman run PETSTORE.json"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/HaneyMK/NewMan_Jenkins_Tests.git"
+  },
+  "author": "Haney Malkawi",
+  "bugs": {
+    "url": "https://github.com/HaneyMK/NewMan_Jenkins_Tests/issues"
+  },
+  "homepage": "https://github.com/HaneyMK/NewMan_Jenkins_Tests#readme",
+  "dependencies": {
+    "newman": "^5.2.4"
+  }
+}
