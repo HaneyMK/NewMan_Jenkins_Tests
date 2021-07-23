@@ -1,0 +1,1496 @@
+{
+	"info": {
+		"_postman_id": "e0cce78a-ba02-4a59-96ac-e49dbbda78c9",
+		"name": "PET STORE APIs",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Add Pet - Successful (200 Status)",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {\r",
+							"    pm.response.to.have.status(200);\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Status code name is OK\", function () {\r",
+							"    pm.response.to.have.status(\"OK\");\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Pet Status is set to Available\", function () {\r",
+							"    var jsonData = pm.response.json();\r",
+							"    pm.expect(jsonData.status).to.eql(\"available\");\r",
+							"});\r",
+							"\r",
+							"var jsonData = JSON.parse(responseBody);\r",
+							"//postman.setEnvironmentVariable(\"NewBoardID\", jsonData.id);\r",
+							"pm.globals.set(\"petID\", jsonData.id);"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n  \"id\": 900,\r\n  \"category\": {\r\n    \"id\": 70,\r\n    \"name\": \"Dogs\"\r\n  },\r\n  \"name\": \"Max\",\r\n  \"photoUrls\": [\r\n    \r\n   \"https://picsum.photos/id/237/200/300\"\r\n  ],\r\n  \"tags\": [\r\n    {\r\n      \"id\": 50,\r\n      \"name\": \"TG1\"\r\n    }\r\n  ],\r\n  \"status\": \"available\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{baseURL}}/pet",
+					"host": [
+						"{{baseURL}}"
+					],
+					"path": [
+						"pet"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Add Pet - Bad Input (400 Status)",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 400\", function () {\r",
+							"    pm.response.to.have.status(400);\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Status code name is Bad Request\", function () {\r",
+							"    pm.response.to.have.status(\"Bad Request\");\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Bad Input Message in Response\", function () {\r",
+							"    pm.expect(pm.response.text()).to.include(\"bad input\");\r",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n  \"id\": A_455454,\r\n  \"category\": {\r\n    \"id\": 70,\r\n    \"name\": \"Dogs\"\r\n  },\r\n  \"name\": \"Max\",\r\n  \"photoUrls\": [\r\n    \r\n   \"https://picsum.photos/id/237/200/300\"\r\n  ],\r\n  \"tags\": [\r\n    {\r\n      \"id\": 50,\r\n      \"name\": \"TG1\"\r\n    }\r\n  ],\r\n  \"status\": \"test\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{baseURL}}/pet",
+					"host": [
+						"{{baseURL}}"
+					],
+					"path": [
+						"pet"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Add Pet - Not Found (404 Status)",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 404\", function () {\r",
+							"    pm.response.to.have.status(404);\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Status code name is Not Found\", function () {\r",
+							"    pm.response.to.have.status(\"Not Found\");\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Null for uri Message in Response\", function () {\r",
+							"    pm.expect(pm.response.text()).to.include(\"null for uri\");\r",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n  \"id\": 900,\r\n  \"category\": {\r\n    \"id\": 70,\r\n    \"name\": \"Dogs\"\r\n  },\r\n  \"name\": \"Max\",\r\n  \"photoUrls\": [\r\n    \r\n   \"https://picsum.photos/id/237/200/300\"\r\n  ],\r\n  \"tags\": [\r\n    {\r\n      \"id\": 50,\r\n      \"name\": \"TG1\"\r\n    }\r\n  ],\r\n  \"status\": \"available\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{baseURL}}/peta",
+					"host": [
+						"{{baseURL}}"
+					],
+					"path": [
+						"peta"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Add Pet - Method Not Allowed (405 Status)",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 405\", function () {\r",
+							"    pm.response.to.have.status(405);\r",
+							"\r",
+							"});\r",
+							"pm.test(\"Status code name is Method Not Allowed\", function () {\r",
+							"    pm.response.to.have.status(\"Method Not Allowed\");\r",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n  \"id\": 900,\r\n  \"category\": {\r\n    \"id\": 70,\r\n    \"name\": \"Dogs\"\r\n  },\r\n  \"name\": \"Max\",\r\n  \"photoUrls\": [\r\n    \r\n   \"https://picsum.photos/id/237/200/300\"\r\n  ],\r\n  \"tags\": [\r\n    {\r\n      \"id\": 50,\r\n      \"name\": \"TG1\"\r\n    }\r\n  ],\r\n  \"status\": \"available\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{baseURL}}/pet",
+					"host": [
+						"{{baseURL}}"
+					],
+					"path": [
+						"pet"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Update Pet - Successful (200 Status)",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {\r",
+							"    pm.response.to.have.status(200);\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Status code name is OK\", function () {\r",
+							"    pm.response.to.have.status(\"OK\");\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Pet Status changed to Pending\", function () {\r",
+							"    var jsonData = pm.response.json();\r",
+							"    pm.expect(jsonData.status).to.eql(\"Pending\");\r",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "PUT",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n  \"id\": {{petID}},\r\n  \"category\": {\r\n    \"id\": 71,\r\n    \"name\": \"Cats\"\r\n  },\r\n  \"name\": \"Dumb dumb\",\r\n  \"photoUrls\": [\r\n    \"https://picsum.photos/id/121/211/301\"\r\n  ],\r\n  \"tags\": [\r\n    {\r\n      \"id\": 60,\r\n      \"name\": \"Demon\"\r\n    }\r\n  ],\r\n  \"status\": \"Pending\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{baseURL}}/pet",
+					"host": [
+						"{{baseURL}}"
+					],
+					"path": [
+						"pet"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Update Pet - Bad Input (400 Status)",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 400\", function () {\r",
+							"    pm.response.to.have.status(400);\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Status code name is Bad Request\", function () {\r",
+							"    pm.response.to.have.status(\"Bad Request\");\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Bad Input Message in Response\", function () {\r",
+							"    pm.expect(pm.response.text()).to.include(\"bad input\");\r",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "PUT",
+				"header": [
+					{
+						"key": "api-key",
+						"value": "special-key",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n  \"id\": AAAAA,\r\n  \"category\": {\r\n    \"id\": 71,\r\n    \"name\": \"Cats\"\r\n  },\r\n  \"name\": \"Dumb dumb\",\r\n  \"photoUrls\": [\r\n    \"https://picsum.photos/id/121/211/301\"\r\n  ],\r\n  \"tags\": [\r\n    {\r\n      \"id\": 60,\r\n      \"name\": \"Demon\"\r\n    }\r\n  ],\r\n  \"status\": 33355\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{baseURL}}/pet",
+					"host": [
+						"{{baseURL}}"
+					],
+					"path": [
+						"pet"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Update Pet - Not Found (404 Status)",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 404\", function () {\r",
+							"    pm.response.to.have.status(404);\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Status code name is Not Found\", function () {\r",
+							"    pm.response.to.have.status(\"Not Found\");\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Null for uri Message in Response\", function () {\r",
+							"    pm.expect(pm.response.text()).to.include(\"null for uri\");\r",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "PUT",
+				"header": [
+					{
+						"key": "api-key",
+						"value": "special-key",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n  \"id\": {{petID}},\r\n  \"category\": {\r\n    \"id\": 71,\r\n    \"name\": \"Cats\"\r\n  },\r\n  \"name\": \"Dumb dumb\",\r\n  \"photoUrls\": [\r\n    \"https://picsum.photos/id/121/211/301\"\r\n  ],\r\n  \"tags\": [\r\n    {\r\n      \"id\": 60,\r\n      \"name\": \"Demon\"\r\n    }\r\n  ],\r\n  \"status\": \"Pending\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{baseURL}}/pet2",
+					"host": [
+						"{{baseURL}}"
+					],
+					"path": [
+						"pet2"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Update Pet - Method Not Allowed (405 Status)",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 405\", function () {\r",
+							"    pm.response.to.have.status(405);\r",
+							"\r",
+							"});\r",
+							"pm.test(\"Status code name is Method Not Allowed\", function () {\r",
+							"    pm.response.to.have.status(\"Method Not Allowed\");\r",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n  \"id\": {{petID}},\r\n  \"category\": {\r\n    \"id\": 71,\r\n    \"name\": \"Cats\"\r\n  },\r\n  \"name\": \"Dumb dumb\",\r\n  \"photoUrls\": [\r\n    \"https://picsum.photos/id/121/211/301\"\r\n  ],\r\n  \"tags\": [\r\n    {\r\n      \"id\": 60,\r\n      \"name\": \"Demon\"\r\n    }\r\n  ],\r\n  \"status\": \"Pending\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{baseURL}}/pet",
+					"host": [
+						"{{baseURL}}"
+					],
+					"path": [
+						"pet"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Upload Pet Image - Successful (200 Status)",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {\r",
+							"    pm.response.to.have.status(200);\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Status code name is OK\", function () {\r",
+							"    pm.response.to.have.status(\"OK\");\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Contains Response Message Parts\", function () {\r",
+							"    pm.expect(pm.response.text()).to.include(\"additionalMetadata\" , \"File uploaded to\");\r",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Accept",
+						"value": "application/json",
+						"type": "text"
+					},
+					{
+						"warning": "This is a duplicate header and will be overridden by the Content-Type header generated by Postman.",
+						"key": "Content-Type",
+						"value": "multipart/form-data",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "formdata",
+					"formdata": [
+						{
+							"key": "additionalMetadata",
+							"value": "TEST",
+							"type": "text"
+						},
+						{
+							"key": "file",
+							"value": "@action_poster.jpg;type:image/jpeg",
+							"type": "text"
+						},
+						{
+							"key": "file",
+							"type": "file",
+							"src": "/C:/Windows/WinSxS/x86_netfx4-aspnet_webadmin_images_b03f5f7f11d50a3a_4.0.15805.0_none_7ab11546ceb3decd/ASPdotNET_logo.jpg"
+						}
+					]
+				},
+				"url": {
+					"raw": "{{baseURL}}/pet/{{petID}}/uploadImage",
+					"host": [
+						"{{baseURL}}"
+					],
+					"path": [
+						"pet",
+						"{{petID}}",
+						"uploadImage"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Upload Pet Image - Bad Request (400 Status)",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 400\", function () {\r",
+							"    pm.response.to.have.status(400);\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Status code name is Bad Request\", function () {\r",
+							"    pm.response.to.have.status(\"Bad Request\");\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Bad Input Message in Response\", function () {\r",
+							"    pm.expect(pm.response.text()).to.include(\"Missing start boundary\");\r",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Accept",
+						"value": "application/json",
+						"type": "text"
+					},
+					{
+						"warning": "This is a duplicate header and will be overridden by the Content-Type header generated by Postman.",
+						"key": "Content-Type",
+						"value": "multipart/form-data",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": {
+					"raw": "{{baseURL}}/pet/{{petID}}/uploadImage",
+					"host": [
+						"{{baseURL}}"
+					],
+					"path": [
+						"pet",
+						"{{petID}}",
+						"uploadImage"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Upload Pet Image - Not Found (404 Status)",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 404\", function () {\r",
+							"    pm.response.to.have.status(404);\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Status code name is Not Found\", function () {\r",
+							"    pm.response.to.have.status(\"Not Found\");\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Null for uri Message in Response\", function () {\r",
+							"    pm.expect(pm.response.text()).to.include(\"null for uri\");\r",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Accept",
+						"value": "application/json",
+						"type": "text"
+					},
+					{
+						"warning": "This is a duplicate header and will be overridden by the Content-Type header generated by Postman.",
+						"key": "Content-Type",
+						"value": "multipart/form-data",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "formdata",
+					"formdata": [
+						{
+							"key": "additionalMetadata",
+							"value": "TEST",
+							"type": "text"
+						},
+						{
+							"key": "file",
+							"value": "@action_poster.jpg;type:image/jpeg",
+							"type": "text"
+						},
+						{
+							"key": "file",
+							"type": "file",
+							"src": "/C:/Windows/WinSxS/x86_netfx4-aspnet_webadmin_images_b03f5f7f11d50a3a_4.0.15805.0_none_7ab11546ceb3decd/ASPdotNET_logo.jpg"
+						}
+					]
+				},
+				"url": {
+					"raw": "{{baseURL}}/pet/{{petID}}/uploadImages",
+					"host": [
+						"{{baseURL}}"
+					],
+					"path": [
+						"pet",
+						"{{petID}}",
+						"uploadImages"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Upload Pet Image - Method Not Allowed (405 Status)",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 405\", function () {\r",
+							"    pm.response.to.have.status(405);\r",
+							"\r",
+							"});\r",
+							"pm.test(\"Status code name is Method Not Allowed\", function () {\r",
+							"    pm.response.to.have.status(\"Method Not Allowed\");\r",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Accept",
+						"value": "application/json",
+						"type": "text"
+					},
+					{
+						"warning": "This is a duplicate header and will be overridden by the Content-Type header generated by Postman.",
+						"key": "Content-Type",
+						"value": "multipart/form-data",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "formdata",
+					"formdata": [
+						{
+							"key": "additionalMetadata",
+							"value": "TEST",
+							"type": "text"
+						},
+						{
+							"key": "file",
+							"value": "@action_poster.jpg;type:image/jpeg",
+							"type": "text"
+						},
+						{
+							"key": "file",
+							"type": "file",
+							"src": "/C:/Windows/WinSxS/x86_netfx4-aspnet_webadmin_images_b03f5f7f11d50a3a_4.0.15805.0_none_7ab11546ceb3decd/ASPdotNET_logo.jpg"
+						}
+					]
+				},
+				"url": {
+					"raw": "{{baseURL}}/pet/{{petID}}/uploadImage",
+					"host": [
+						"{{baseURL}}"
+					],
+					"path": [
+						"pet",
+						"{{petID}}",
+						"uploadImage"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Update Pet with Form Data - Successful (200 Status)",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {\r",
+							"    pm.response.to.have.status(200);\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Status code name is OK\", function () {\r",
+							"    pm.response.to.have.status(\"OK\");\r",
+							"});\r",
+							"\r",
+							"pm.test(\"PetID in response is correct\", function () {\r",
+							"    var jsonData = pm.response.json();\r",
+							"    pm.expect(JSON.parse(jsonData.message)).to.eql(pm.globals.get(\"petID\"));\r",
+							"});\r",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Accept",
+						"value": "application/json",
+						"type": "text"
+					},
+					{
+						"key": "Content-Type",
+						"value": "application/x-www-form-urlencoded",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "name=tttt&status=sold"
+				},
+				"url": {
+					"raw": "{{baseURL}}/pet/{{petID}}",
+					"host": [
+						"{{baseURL}}"
+					],
+					"path": [
+						"pet",
+						"{{petID}}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Update Pet with Form Data - Unsupported Media Type (415 Status)",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 415\", function () {\r",
+							"    pm.response.to.have.status(415);\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Status code name is Unsupported Media Type\", function () {\r",
+							"    pm.response.to.have.status(\"Unsupported Media Type\");\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Unknown Text in Response\", function () {\r",
+							"    var JsonData= pm.response.json();\r",
+							"    pm.expect(JsonData.type).to.eql(\"unknown\");\r",
+							"});\r",
+							"\r",
+							"\r",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Accept",
+						"value": "application/json",
+						"type": "text"
+					},
+					{
+						"key": "Content-Type",
+						"value": "application/xop+xml",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "{{baseURL}}/pet/{{petID}}",
+					"host": [
+						"{{baseURL}}"
+					],
+					"path": [
+						"pet",
+						"{{petID}}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Update Pet with Form Data - Not Acceptable (406 Status)",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 406\", function () {\r",
+							"    pm.response.to.have.status(406);\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Status code name is Not Acceptable\", function () {\r",
+							"    pm.response.to.have.status(\"Not Acceptable\");\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Unknown Text in Response\", function () {\r",
+							"    pm.expect(pm.response.text()).to.include(\"unknown\");\r",
+							"});\r",
+							"\r",
+							"\r",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Accept",
+						"value": "application/javascript",
+						"type": "text"
+					},
+					{
+						"key": "Content-Type",
+						"value": "application/x-www-form-urlencoded",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "urlencoded",
+					"urlencoded": [
+						{
+							"key": "name",
+							"value": "Lily",
+							"type": "text",
+							"disabled": true
+						},
+						{
+							"key": "status",
+							"value": "sold",
+							"type": "text",
+							"disabled": true
+						}
+					]
+				},
+				"url": {
+					"raw": "{{baseURL}}/pet/{{petID}}",
+					"host": [
+						"{{baseURL}}"
+					],
+					"path": [
+						"pet",
+						"{{petID}}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Update Pet with Form Data - Not Found (404 Status)",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 404\", function () {\r",
+							"    pm.response.to.have.status(404);\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Status code name is Not Found\", function () {\r",
+							"    pm.response.to.have.status(\"Not Found\");\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Null for uri Message in Response\", function () {\r",
+							"    pm.expect(pm.response.text()).to.include(\"null for uri\");\r",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Accept",
+						"value": "application/json",
+						"type": "text"
+					},
+					{
+						"warning": "This is a duplicate header and will be overridden by the Content-Type header generated by Postman.",
+						"key": "Content-Type",
+						"value": "application/x-www-form-urlencoded",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "urlencoded",
+					"urlencoded": [
+						{
+							"key": "name",
+							"value": "Lily",
+							"type": "text"
+						},
+						{
+							"key": "status",
+							"value": "sold",
+							"type": "text"
+						}
+					]
+				},
+				"url": {
+					"raw": "{{baseURL}}/pets/{{petID}}",
+					"host": [
+						"{{baseURL}}"
+					],
+					"path": [
+						"pets",
+						"{{petID}}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Update Pet with Form Data - Method Not Allowed (405 Status)",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 405\", function () {\r",
+							"    pm.response.to.have.status(405);\r",
+							"\r",
+							"});\r",
+							"pm.test(\"Status code name is Method Not Allowed\", function () {\r",
+							"    pm.response.to.have.status(\"Method Not Allowed\");\r",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "COPY",
+				"header": [
+					{
+						"key": "Accept",
+						"value": "application/json",
+						"type": "text"
+					},
+					{
+						"warning": "This is a duplicate header and will be overridden by the Content-Type header generated by Postman.",
+						"key": "Content-Type",
+						"value": "application/x-www-form-urlencoded",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "urlencoded",
+					"urlencoded": [
+						{
+							"key": "name",
+							"value": "Lily",
+							"type": "text"
+						},
+						{
+							"key": "status",
+							"value": "sold",
+							"type": "text"
+						}
+					]
+				},
+				"url": {
+					"raw": "{{baseURL}}/pet/{{petID}}",
+					"host": [
+						"{{baseURL}}"
+					],
+					"path": [
+						"pet",
+						"{{petID}}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "GET Pet by ID - Successful (200 Status)",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {\r",
+							"    pm.response.to.have.status(200);\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Status code name is OK\", function () {\r",
+							"    pm.response.to.have.status(\"OK\");\r",
+							"});\r",
+							"\r",
+							"pm.test(\"PetID in response is correct\", function () {\r",
+							"    var jsonData = pm.response.json();\r",
+							"    pm.expect(JSON.parse(jsonData.id)).to.eql(pm.globals.get(\"petID\"));\r",
+							"});\r",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": {
+					"raw": "{{baseURL}}/pet/{{petID}}",
+					"host": [
+						"{{baseURL}}"
+					],
+					"path": [
+						"pet",
+						"{{petID}}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "GET Pet by ID - Pet Not Found (404 Status)",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 404\", function () {\r",
+							"    pm.response.to.have.status(404);\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Status code name is Not Found\", function () {\r",
+							"    pm.response.to.have.status(\"Not Found\");\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Pet Not Found Message in Response\", function () {\r",
+							"    pm.expect(pm.response.text()).to.include(\"Pet not found\");\r",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": {
+					"raw": "{{baseURL}}/pet/901",
+					"host": [
+						"{{baseURL}}"
+					],
+					"path": [
+						"pet",
+						"901"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "GET Pet by ID - Method Not Allowed (405 Status)",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 405\", function () {\r",
+							"    pm.response.to.have.status(405);\r",
+							"\r",
+							"});\r",
+							"pm.test(\"Status code name is Method Not Allowed\", function () {\r",
+							"    pm.response.to.have.status(\"Method Not Allowed\");\r",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": {
+					"raw": "{{baseURL}}/pet/#66",
+					"host": [
+						"{{baseURL}}"
+					],
+					"path": [
+						"pet",
+						""
+					],
+					"hash": "66"
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Find Pet by Status - Available - Successful (200 Status)",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {\r",
+							"    pm.response.to.have.status(200);\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Status code name is OK\", function () {\r",
+							"    pm.response.to.have.status(\"OK\");\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Pet Status for all records is Available\", function () {\r",
+							"\r",
+							"var jsonData = pm.response.json();\r",
+							"var count = Object.keys(jsonData).length;\r",
+							"console.log(count);\r",
+							"for(i=0;i<count;i++) \r",
+							"{\r",
+							"pm.expect(jsonData[i].status).to.eql(\"available\");\r",
+							"}\r",
+							"\r",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": {
+					"raw": "{{baseURL}}/pet/findByStatus?status=available",
+					"host": [
+						"{{baseURL}}"
+					],
+					"path": [
+						"pet",
+						"findByStatus"
+					],
+					"query": [
+						{
+							"key": "status",
+							"value": "available"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Find Pet by Status - Pending - Successful (200 Status)",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {\r",
+							"    pm.response.to.have.status(200);\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Status code name is OK\", function () {\r",
+							"    pm.response.to.have.status(\"OK\");\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Pet Status for all records is Pending\", function () {\r",
+							"\r",
+							"var jsonData = pm.response.json();\r",
+							"var count = Object.keys(jsonData).length;\r",
+							"console.log(count);\r",
+							"for(i=0;i<count;i++) \r",
+							"{\r",
+							"pm.expect(jsonData[i].status).to.eql(\"pending\");\r",
+							"}\r",
+							"\r",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": {
+					"raw": "{{baseURL}}/pet/findByStatus?status=pending",
+					"host": [
+						"{{baseURL}}"
+					],
+					"path": [
+						"pet",
+						"findByStatus"
+					],
+					"query": [
+						{
+							"key": "status",
+							"value": "pending"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Find Pet by Status - Sold - Successful (200 Status)",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {\r",
+							"    pm.response.to.have.status(200);\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Status code name is OK\", function () {\r",
+							"    pm.response.to.have.status(\"OK\");\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Pet Status for all records is Sold\", function () {\r",
+							"\r",
+							"var jsonData = pm.response.json();\r",
+							"var count = Object.keys(jsonData).length;\r",
+							"console.log(count);\r",
+							"for(i=0;i<count;i++) \r",
+							"{\r",
+							"pm.expect(jsonData[i].status).to.eql(\"sold\");\r",
+							"}\r",
+							"\r",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": {
+					"raw": "{{baseURL}}/pet/findByStatus?status=sold",
+					"host": [
+						"{{baseURL}}"
+					],
+					"path": [
+						"pet",
+						"findByStatus"
+					],
+					"query": [
+						{
+							"key": "status",
+							"value": "sold"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Find Pet by Status - Not Found (404 Status)",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 404\", function () {\r",
+							"    pm.response.to.have.status(404);\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Status code name is Not Found\", function () {\r",
+							"    pm.response.to.have.status(\"Not Found\");\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Check Message in Response\", function () {\r",
+							"    pm.expect(pm.response.text()).to.include(\"For input string\", \"findByStates\");\r",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": {
+					"raw": "{{baseURL}}/pet/findByStates?status=sold",
+					"host": [
+						"{{baseURL}}"
+					],
+					"path": [
+						"pet",
+						"findByStates"
+					],
+					"query": [
+						{
+							"key": "status",
+							"value": "sold"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Delete Pet - Successful (200 Status)",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {\r",
+							"    pm.response.to.have.status(200);\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Status code name is OK\", function () {\r",
+							"    pm.response.to.have.status(\"OK\");\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Deleted PetID in response is correct\", function () {\r",
+							"    var jsonData = pm.response.json();\r",
+							"    pm.expect(JSON.parse(jsonData.message)).to.eql(pm.globals.get(\"petID\"));\r",
+							"});\r",
+							"\r",
+							"// Empty PetID global variable after record is deleted\r",
+							"pm.globals.set(\"petID\", \"\");"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "DELETE",
+				"header": [],
+				"url": {
+					"raw": "{{baseURL}}/pet/{{petID}}",
+					"host": [
+						"{{baseURL}}"
+					],
+					"path": [
+						"pet",
+						"{{petID}}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Delete Pet - Pet Not Found (404 Status)",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 404\", function () {\r",
+							"    pm.response.to.have.status(404);\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Status code name is Not Found\", function () {\r",
+							"    pm.response.to.have.status(\"Not Found\");\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Null for uri Message in Response\", function () {\r",
+							"    pm.expect(pm.response.text()).to.include(\"null for uri\");\r",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "DELETE",
+				"header": [],
+				"url": {
+					"raw": "{{baseURL}}/pets/9977",
+					"host": [
+						"{{baseURL}}"
+					],
+					"path": [
+						"pets",
+						"9977"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Delete Pet -  Method Not Allowed (405 Status)",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 405\", function () {\r",
+							"    pm.response.to.have.status(405);\r",
+							"\r",
+							"});\r",
+							"pm.test(\"Status code name is Method Not Allowed\", function () {\r",
+							"    pm.response.to.have.status(\"Method Not Allowed\");\r",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "DELETE",
+				"header": [],
+				"url": {
+					"raw": "{{baseURL}}/pet/#",
+					"host": [
+						"{{baseURL}}"
+					],
+					"path": [
+						"pet",
+						""
+					],
+					"hash": ""
+				}
+			},
+			"response": []
+		}
+	],
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		}
+	],
+	"variable": [
+		{
+			"key": "baseURL",
+			"value": "https://petstore.swagger.io/v2"
+		}
+	]
+}

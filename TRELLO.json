@@ -1,0 +1,592 @@
+{
+	"info": {
+		"_postman_id": "c756a940-04ef-4be8-918d-0652295cadfb",
+		"name": "TRELLO APIs",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "List All My Boards",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{baseURL}}/members/me/boards/?key={{yourKey}}&token={{yourToken}}&fields=name",
+					"host": [
+						"{{baseURL}}"
+					],
+					"path": [
+						"members",
+						"me",
+						"boards",
+						""
+					],
+					"query": [
+						{
+							"key": "key",
+							"value": "{{yourKey}}"
+						},
+						{
+							"key": "token",
+							"value": "{{yourToken}}"
+						},
+						{
+							"key": "fields",
+							"value": "name"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Create NewBoard",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"// Variables\r",
+							"var jsonData = pm.response.json();\r",
+							"\r",
+							"// Check Request's Status Code\r",
+							"pm.test(\"Status code is 200\", function () {\r",
+							"    pm.response.to.have.status(200);\r",
+							"});\r",
+							"\r",
+							"// Check Board's Name\r",
+							"pm.test(\"Board Name is \" + pm.collectionVariables.get(\"BoardName\"), function () {\r",
+							"    pm.expect(jsonData.name).to.eql(pm.collectionVariables.get(\"BoardName\"));\r",
+							"});\r",
+							"\r",
+							"// Check Board's Permission Level\r",
+							"pm.test(\"Permission Level is Private\", function () {\r",
+							"    pm.expect(jsonData.prefs.permissionLevel).eql(\"private\")\r",
+							"});\r",
+							"\r",
+							"//postman.setEnvironmentVariable(\"NewBoardID\", jsonData.id);\r",
+							"//postman.setEnvironmentVariable(\"IsNewBoardClosed\", jsonData.closed);\r",
+							"\r",
+							"pm.globals.set(\"NewBoardID\", jsonData.id);\r",
+							"pm.globals.set(\"IsNewBoardClosed\", jsonData.closed);\r",
+							"\r",
+							"\r",
+							"//pm.collectionVariables.set(\"NewBoardID\", jsonData.id);\r",
+							"//pm.collectionVariables.set(\"IsNewBoardClosed\", jsonData.closed);\r",
+							"\r",
+							"\r",
+							"\r",
+							"//console.log(pm.globals.get(\"IsNewBoardClosed\"))\r",
+							"//pm.collectionVariables.set(\"IsNewBoardClosed\", pm.globals.get(\"IsNewBoardClosed\"));\r",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"url": {
+					"raw": "{{baseURL}}/boards/?key={{yourKey}}&token={{yourToken}}&name={{BoardName}}",
+					"host": [
+						"{{baseURL}}"
+					],
+					"path": [
+						"boards",
+						""
+					],
+					"query": [
+						{
+							"key": "key",
+							"value": "{{yourKey}}"
+						},
+						{
+							"key": "token",
+							"value": "{{yourToken}}"
+						},
+						{
+							"key": "name",
+							"value": "{{BoardName}}"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Create TODO List",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"// Variables\r",
+							"var jsonData = JSON.parse(responseBody);\r",
+							"\r",
+							"// Check Request's Status Code\r",
+							"pm.test(\"Status code is 200\", function () {\r",
+							"    pm.response.to.have.status(200);\r",
+							"});\r",
+							"\r",
+							"// Check List's Name\r",
+							"pm.test(\"List Name is \"+pm.collectionVariables.get(\"ListName1\"), function () {\r",
+							"    pm.expect(jsonData.name).to.eql(pm.collectionVariables.get(\"ListName1\"));\r",
+							"});\r",
+							"\r",
+							"// Check Board is not closed\r",
+							"pm.test(\"Board is not closed\", function () {\r",
+							"pm.expect(pm.globals.get('IsNewBoardClosed')).to.eql(false);\r",
+							"});\r",
+							"\r",
+							"postman.setEnvironmentVariable(\"ToDoListID\", jsonData.id);\r",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"url": {
+					"raw": "{{baseURL}}/lists/?key={{yourKey}}&token={{yourToken}}&name={{ListName1}}&idBoard={{NewBoardID}}",
+					"host": [
+						"{{baseURL}}"
+					],
+					"path": [
+						"lists",
+						""
+					],
+					"query": [
+						{
+							"key": "key",
+							"value": "{{yourKey}}"
+						},
+						{
+							"key": "token",
+							"value": "{{yourToken}}"
+						},
+						{
+							"key": "name",
+							"value": "{{ListName1}}"
+						},
+						{
+							"key": "idBoard",
+							"value": "{{NewBoardID}}"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Create DONE List",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"// Variables\r",
+							"var jsonData = pm.response.json();\r",
+							"\r",
+							"// Check Request's Status Code\r",
+							"pm.test(\"Status code is 200\", function () {\r",
+							"    pm.response.to.have.status(200);\r",
+							"});\r",
+							"\r",
+							"// Check List's Name\r",
+							"pm.test(\"List Name is \"+pm.collectionVariables.get(\"ListName2\"), function () {\r",
+							"\r",
+							"    pm.expect(jsonData.name).to.eql(pm.collectionVariables.get(\"ListName2\"));\r",
+							"});\r",
+							"\r",
+							"// Check Board is not closed\r",
+							"pm.test(\"Board is not closed\", function () {\r",
+							"pm.expect(pm.globals.get('IsNewBoardClosed')).to.eql(false);\r",
+							"});\r",
+							"\r",
+							"postman.setEnvironmentVariable(\"DoneListID\", jsonData.id);"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"url": {
+					"raw": "{{baseURL}}/lists/?key={{yourKey}}&token={{yourToken}}&name={{ListName2}}&idBoard={{NewBoardID}}",
+					"host": [
+						"{{baseURL}}"
+					],
+					"path": [
+						"lists",
+						""
+					],
+					"query": [
+						{
+							"key": "key",
+							"value": "{{yourKey}}"
+						},
+						{
+							"key": "token",
+							"value": "{{yourToken}}"
+						},
+						{
+							"key": "name",
+							"value": "{{ListName2}}"
+						},
+						{
+							"key": "idBoard",
+							"value": "{{NewBoardID}}"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Create Learn Postman Card at TODO List",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"// Variables\r",
+							"var jsonData = pm.response.json();\r",
+							"\r",
+							"// Check Request's Status Code\r",
+							"pm.test(\"Status code is 200\", function () {\r",
+							"    pm.response.to.have.status(200);\r",
+							"});\r",
+							"\r",
+							"// Check Card's Name\r",
+							"pm.test(\"Card Name is \"+pm.collectionVariables.get(\"CardName\"), function () {\r",
+							"\r",
+							"    pm.expect(jsonData.name).to.eql(pm.collectionVariables.get(\"CardName\"));\r",
+							"});\r",
+							"\r",
+							"// Check Card is not closed\r",
+							"pm.test(\"Card is not closed\", function () {\r",
+							"var jsonData = pm.response.json();\r",
+							"pm.expect(jsonData.closed).to.eql(false);\r",
+							"});\r",
+							"\r",
+							"postman.setEnvironmentVariable(\"LearnPostmanCardID\", jsonData.id);"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"url": {
+					"raw": "{{baseURL}}/lists/{{ToDoListID}}/cards?key={{yourKey}}&token={{yourToken}}&name={{CardName}}",
+					"host": [
+						"{{baseURL}}"
+					],
+					"path": [
+						"lists",
+						"{{ToDoListID}}",
+						"cards"
+					],
+					"query": [
+						{
+							"key": "key",
+							"value": "{{yourKey}}"
+						},
+						{
+							"key": "token",
+							"value": "{{yourToken}}"
+						},
+						{
+							"key": "name",
+							"value": "{{CardName}}"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Move Card from TODO to DONE List",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"// Variables\r",
+							"var jsonData = pm.response.json();\r",
+							"\r",
+							"// Check Request's Status Code\r",
+							"pm.test(\"Status code is 200\", function () {\r",
+							"    pm.response.to.have.status(200);\r",
+							"});\r",
+							"\r",
+							"// Check Card's Name\r",
+							"pm.test(\"Card Name is \"+pm.collectionVariables.get(\"CardName\"), function () {\r",
+							" \r",
+							"    pm.expect(jsonData.name).to.eql(pm.collectionVariables.get(\"CardName\"));\r",
+							"});\r",
+							"\r",
+							"// Check Learn Postman Card was moved to DONE List\r",
+							"pm.test(pm.collectionVariables.get(\"CardName\")+\" Card moved to \" +pm.collectionVariables.get(\"ListName2\"), function () {\r",
+							"\r",
+							"    pm.expect(jsonData.idList).to.eql(pm.variables.get('DoneListID'));\r",
+							"\r",
+							"});\r",
+							"\r",
+							"\r",
+							"\r",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "PUT",
+				"header": [],
+				"url": {
+					"raw": "{{baseURL}}/cards/{{LearnPostmanCardID}}?key={{yourKey}}&token={{yourToken}}&idList={{DoneListID}}",
+					"host": [
+						"{{baseURL}}"
+					],
+					"path": [
+						"cards",
+						"{{LearnPostmanCardID}}"
+					],
+					"query": [
+						{
+							"key": "key",
+							"value": "{{yourKey}}"
+						},
+						{
+							"key": "token",
+							"value": "{{yourToken}}"
+						},
+						{
+							"key": "idList",
+							"value": "{{DoneListID}}"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Delete NewBoard",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"// Variables\r",
+							"var jsonData = JSON.parse(responseBody);\r",
+							"\r",
+							"// Check Request's Status Code\r",
+							"pm.test(\"Status code is 200\", function () {\r",
+							"    pm.response.to.have.status(200);\r",
+							"});\r",
+							"\r",
+							"// Reset all Variables values\r",
+							"postman.setEnvironmentVariable(\"ToDoListID\", \"\");\r",
+							"postman.setEnvironmentVariable(\"DoneListID\", \"\");\r",
+							"postman.setEnvironmentVariable(\"LearnPostmanCardID\", \"\");\r",
+							"pm.globals.set(\"IsNewBoardClosed\", \"\");\r",
+							"pm.globals.set(\"NewBoardID\", \"\");\r",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "DELETE",
+				"header": [],
+				"url": {
+					"raw": "{{baseURL}}/boards/{{NewBoardID}}?key={{yourKey}}&token={{yourToken}}",
+					"host": [
+						"{{baseURL}}"
+					],
+					"path": [
+						"boards",
+						"{{NewBoardID}}"
+					],
+					"query": [
+						{
+							"key": "key",
+							"value": "{{yourKey}}"
+						},
+						{
+							"key": "token",
+							"value": "{{yourToken}}"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "NewBoard Does Not Exist #1",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"// Check Board does not exist after Deletion\r",
+							"\r",
+							"pm.test(\"Check \" +pm.collectionVariables.get(\"BoardName\") +\" does not exist after Deletion\", () => {\r",
+							"  pm.response.to.have.status(404);\r",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{baseURL}}/boards/{{NewBoardID}}?key={{yourKey}}&token={{yourToken}}",
+					"host": [
+						"{{baseURL}}"
+					],
+					"path": [
+						"boards",
+						"{{NewBoardID}}"
+					],
+					"query": [
+						{
+							"key": "key",
+							"value": "{{yourKey}}"
+						},
+						{
+							"key": "token",
+							"value": "{{yourToken}}"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "NewBoard Does Not Exist #2",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"// Variables\r",
+							"var jsonData = pm.response.json();\r",
+							"\r",
+							"// Check Request's Status Code\r",
+							"pm.test(\"Status code is 200\", function () {\r",
+							"    pm.response.to.have.status(200);\r",
+							"});\r",
+							"\r",
+							"// Check Board does not exist after Deletion\r",
+							"pm.test(pm.collectionVariables.get(\"BoardName\")+ \" does not exist\", function () {\r",
+							"\r",
+							"var count = Object.keys(jsonData).length;\r",
+							"for(i=0;i<count;i++) \r",
+							"{\r",
+							"pm.expect(jsonData[i].name).to.not.eql(pm.collectionVariables.get(\"BoardName\"));\r",
+							"//console.log(jsonData[i].name);\r",
+							"//console.log(count);\r",
+							"\r",
+							"}\r",
+							"});\r",
+							"\r",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{baseURL}}/members/me/boards?key={{yourKey}}&token={{yourToken}}",
+					"host": [
+						"{{baseURL}}"
+					],
+					"path": [
+						"members",
+						"me",
+						"boards"
+					],
+					"query": [
+						{
+							"key": "fields",
+							"value": "name,url",
+							"disabled": true
+						},
+						{
+							"key": "key",
+							"value": "{{yourKey}}"
+						},
+						{
+							"key": "token",
+							"value": "{{yourToken}}"
+						}
+					]
+				}
+			},
+			"response": []
+		}
+	],
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		}
+	],
+	"variable": [
+		{
+			"key": "baseURL",
+			"value": "https://api.trello.com/1"
+		},
+		{
+			"key": "BoardName",
+			"value": "NewBoard"
+		},
+		{
+			"key": "ListName1",
+			"value": "TODO"
+		},
+		{
+			"key": "ListName2",
+			"value": "DONE"
+		},
+		{
+			"key": "CardName",
+			"value": "Learn Postman"
+		},
+		{
+			"key": "yourKey",
+			"value": "a77053df637d000500268b9bbbd19b7f"
+		},
+		{
+			"key": "yourToken",
+			"value": "7de16f5774274a0f85e26ebc695207be5ad1276beca120dfe4481a18f6a0127b"
+		}
+	]
+}
