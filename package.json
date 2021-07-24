@@ -4,7 +4,7 @@
   "description": "Project for Storing Postman Tests",
   "scripts": {
     "api-test-Trello": "newman run TRELLO.json --disable-unicode --reporters cli,junit,html --reporter-junit-export TrelloResults.xml --reporter-html-export C:/Users/Honey/Desktop/Jenkins/reports/index.html",
-    "api-test-Petstore": "newman run PETSTORE.json --disable-unicode --reporters cli,junit --reporter-junit-export PetStoreResults.xml"
+    "api-test-Petstore": "newman run PETSTORE.json --disable-unicode --reporters cli,junit --reporter-junit-export PetStoreResults.xml --reporter-html-export C:/Users/Honey/Desktop/Jenkins/reports/index.html"
   },
   "repository": {
     "type": "git",
